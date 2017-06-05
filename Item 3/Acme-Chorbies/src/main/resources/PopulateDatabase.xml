@@ -29,6 +29,18 @@
 			</list>
 		</property>
 	</bean>
+	
+	<bean id="userAccountA2" class="security.UserAccount">
+		<property name="username" value="admin2" />
+		<property name="password" value="c84258e9c39059a89ab77d846ddab909" />
+		<property name="authorities">
+			<list>
+				<bean class="security.Authority">
+					<property name="authority" value="ADMIN" />
+				</bean>
+			</list>
+		</property>
+	</bean>
 
 	<bean id="userAccountC1" class="security.UserAccount">
 		<property name="username" value="chorbi1" />
@@ -220,6 +232,14 @@
 		<property name="email" value="admin@email.com" />
 		<property name="phone" value="+666 335566" />
 		<property name="userAccount" ref="userAccountA" />
+	</bean>
+	
+	<bean id="admin2" class="domain.Administrator">
+		<property name="name" value="admin2Name" />
+		<property name="surname" value="admin2Surname" />
+		<property name="email" value="admin2@email.com" />
+		<property name="phone" value="+666 335566" />
+		<property name="userAccount" ref="userAccountA2" />
 	</bean>
 	
 	<!-- CHORBIES -->
@@ -1139,6 +1159,36 @@
 		<property name="amount" value="25" />
 		<property name="paid" value="false" />
 		<property name="user" ref="manager4" />
+	</bean>
+	
+	<!-- SKUs -->
+	
+	<bean id="sku1" class="domain.Sku">
+		<property name="label" value="" />
+		<property name="cancelled" value="false" />
+		<property name="administrator" ref="admin" />
+		<property name="event" ref="event2" />
+	</bean>
+	
+	<bean id="sku2" class="domain.Sku">
+		<property name="label" value="" />
+		<property name="cancelled" value="false" />
+		<property name="administrator" ref="admin" />
+		<property name="event" ref="event3" />
+	</bean>
+	
+	<bean id="sku3" class="domain.Sku">
+		<property name="label" value="" />
+		<property name="cancelled" value="false" />
+		<property name="administrator" ref="admin2" />
+		<property name="event" ref="event4" />
+	</bean>
+	
+	<bean id="sku4" class="domain.Sku">
+		<property name="label" value="" />
+		<property name="cancelled" value="false" />
+		<property name="administrator" ref="admin2" />
+		<property name="event" ref="event5" />
 	</bean>
 
 </beans>
