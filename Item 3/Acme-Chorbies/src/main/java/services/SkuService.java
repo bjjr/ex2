@@ -74,11 +74,30 @@ public class SkuService {
 		return res;
 	}
 
-	public Sku reconstruct(final Sku sku, final boolean isCancelled, final BindingResult bindingResult) {
-		//TODO
-		return null;
-	}
+	public Sku reconstruct(final Sku sku, final boolean isCancel, final BindingResult bindingResult) {
+		final Sku res = sku;
 
+		//TODO AÑADIR ATRIBUTOS QUE FALTEN
+
+		if (!isCancel) {
+
+			res.setCancelled(false);
+			res.setJustification(null);
+			res.setAdministrator(this.administratorService.findByPrincipal());
+			res.setLabel(this.generateIdCode());
+
+		} else {
+			final Sku aux = this.findOne(sku.getId());
+			res.setAdministrator(aux.getAdministrator());
+			res.setCancelled(true);
+			res.setEvent(aux.getEvent());
+			res.setLabel(aux.getLabel());
+		}
+
+		this.validator.validate(res, bindingResult);
+
+		return res;
+	}
 	public Collection<Sku> findAll() {
 		Collection<Sku> skus;
 
