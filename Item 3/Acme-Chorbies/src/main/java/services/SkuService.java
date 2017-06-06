@@ -14,6 +14,8 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.Validator;
 
 import repositories.SkuRepository;
+import security.Authority;
+import domain.Administrator;
 import domain.Event;
 import domain.Sku;
 
@@ -51,10 +53,13 @@ public class SkuService {
 
 	// Simple CRUD methods --------------------------
 
-	public Sku create() {
+	public Sku create(final int eventId) {
 		Assert.isTrue(this.actorService.checkAuthority("ADMIN"));
 
 		final Sku sku = new Sku();
+		final Event event = this.eventService.findOne(eventId);
+
+		sku.setEvent(event);
 
 		return sku;
 	}
@@ -98,10 +103,10 @@ public class SkuService {
 
 	// Other business methods -----------------------
 
-	public Collection<Event> eventsWithSkuNotCancelled() {
+	public Collection<Event> findEventsWithSkuNotCancelled() {
 		Collection<Event> events;
 
-		events = this.skuRepository.eventsWithSkuNotCancelled();
+		events = this.skuRepository.findEventsWithSkuNotCancelled();
 		Assert.notNull(events);
 
 		return events;
@@ -131,6 +136,26 @@ public class SkuService {
 		} while (allUniqueIDs.contains(uniqueID));
 
 		return uniqueID;
+	}
+
+	public Collection<Sku> findSkusByAdministrator() {
+		Assert.isTrue(this.actorService.checkAuthority(Authority.ADMIN));
+
+		Collection<Sku> res;
+		Administrator administrator;
+
+		administrator = this.administratorService.findByPrincipal();
+		res = this.skuRepository.findSkusByAdministrator(administrator.getId());
+
+		return res;
+	}
+
+	public Collection<Event> findEventsWithSku() {
+		Collection<Event> res;
+
+		res = this.skuRepository.findEventsWithSku();
+
+		return res;
 	}
 
 }

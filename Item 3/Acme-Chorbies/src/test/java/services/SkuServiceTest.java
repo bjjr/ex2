@@ -33,26 +33,26 @@ public class SkuServiceTest extends AbstractTest {
 	// Tests ----------------------------------------
 
 	/*
-	 * TODO
+	 * TODO INSERTAR ID DE EVENTO
 	 */
 
 	@Test
 	public void createDriver() {
 		final Object testingData[][] = {
 			{ // Successful test
-				"admin", null
+				"admin", 0, null
 			}, { // User tries to create an Sku
-				"user1", IllegalArgumentException.class
+				"user1", 0, IllegalArgumentException.class
 			}
 		};
 
 		for (int i = 0; i < testingData.length; i++)
-			this.createTemplate((String) testingData[i][0], (Class<?>) testingData[i][1]);
+			this.createTemplate((String) testingData[i][0], (int) testingData[i][1], (Class<?>) testingData[i][1]);
 	}
 
 	// Templates ------------------------------------
 
-	protected void createTemplate(final String username, final Class<?> expected) {
+	protected void createTemplate(final String username, final int eventId, final Class<?> expected) {
 		Class<?> caught;
 
 		caught = null;
@@ -67,7 +67,7 @@ public class SkuServiceTest extends AbstractTest {
 
 			// Simulating form
 
-			sku = this.skuService.create();
+			sku = this.skuService.create(eventId);
 			//TODO
 
 			// Creating a binding

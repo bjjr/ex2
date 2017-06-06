@@ -13,6 +13,7 @@ import org.springframework.web.servlet.ModelAndView;
 import services.ActorService;
 import services.ChorbiService;
 import services.EventService;
+import services.SkuService;
 import domain.Chorbi;
 import domain.Event;
 
@@ -30,6 +31,9 @@ public class EventController extends AbstractController {
 
 	@Autowired
 	private ActorService	actorService;
+
+	@Autowired
+	private SkuService		skuService;
 
 
 	// Constructors ---------------------------------
@@ -74,7 +78,7 @@ public class EventController extends AbstractController {
 	@RequestMapping(value = "/list", method = RequestMethod.GET)
 	public ModelAndView list() {
 		ModelAndView res;
-		Collection<Event> events, chorbiEvents;
+		Collection<Event> events, chorbiEvents, allEventsWithSku, eventsWithSkuNotCancelled;
 		Date current;
 		Boolean all;
 
@@ -82,6 +86,8 @@ public class EventController extends AbstractController {
 		chorbiEvents = null;
 		current = new Date();
 		all = true;
+		allEventsWithSku = this.skuService.findEventsWithSku();
+		eventsWithSkuNotCancelled = this.skuService.findEventsWithSkuNotCancelled();
 
 		if (this.actorService.checkAuthority("CHORBI")) {
 			Chorbi principal;
@@ -96,8 +102,9 @@ public class EventController extends AbstractController {
 		res.addObject("current", current);
 		res.addObject("all", all);
 		res.addObject("requestURI", "event/list.do");
+		res.addObject("allEventsWithSku", allEventsWithSku);
+		res.addObject("eventsWithSkuNotCancelled", eventsWithSkuNotCancelled);
 
 		return res;
 	}
-
 }
