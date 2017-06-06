@@ -65,6 +65,9 @@
 		<bean class="converters.UserAccountToStringConverter" />
 		<bean class="converters.StringToUserAccountConverter" />
 		
+		<bean class="converters.SkuToStringConverter" />
+		<bean class="converters.StringToSkuConverter" />
+		
 	</util:list>
 	
 </beans>

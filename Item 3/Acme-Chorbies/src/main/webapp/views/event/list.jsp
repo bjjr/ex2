@@ -78,6 +78,20 @@
 			<acme:link href="event/manager/edit.do?eventId=${row.id}" code="event.edit"/>
 		</display:column>
 	</jstl:if>
+	
+	<jstl:if test="${eventsWithSkuNotCancelled.contains(row)}">
+		<display:column>
+			<acme:link href="sku/display.do?eventId=${row.id}" code="sku.display"/>
+		</display:column>
+	</jstl:if>
+	
+	<security:authorize access="hasRole('ADMIN')">
+		<jstl:if test="${!allEventsWithSku.contains(row)}">
+			<!-- SEGUNDA CONDICION PARA CREAR -->
+			<%-- <jstl:if test="${isPast}"></jstl:if> --%>
+			<acme:link href="sku/administrator/create.do?eventId=${row.id}" code="sku.register"/>
+		</jstl:if>
+	</security:authorize>
 
 </display:table>
 

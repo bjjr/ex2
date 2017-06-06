@@ -39,6 +39,7 @@
 		<value>/views/manager/messages</value>
 		<value>/views/searchTemplate/messages</value>
 		<value>/views/broadcast/messages</value>
+		<value>/views/sku/messages</value>
 		
 	</util:list>
 

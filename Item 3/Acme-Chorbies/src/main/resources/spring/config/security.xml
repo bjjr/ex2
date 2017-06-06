@@ -82,7 +82,10 @@
 		<security:intercept-url pattern="/acmemanager/edit.do" access="hasRole('MANAGER')" /> 
 		<security:intercept-url pattern="/acmemanager/save.do" access="hasAnyRole('MANAGER', 'ADMIN')" />
 		
-		<security:intercept-url pattern="/broadcast/manager/**" access="hasRole('MANAGER')" /> 
+		<security:intercept-url pattern="/broadcast/manager/**" access="hasRole('MANAGER')" />
+		
+		<security:intercept-url pattern="/sku/display.do" access="isAnonymous() or hasAnyRole('CHORBI', 'MANAGER', 'ADMIN')" />
+		<security:intercept-url pattern="/sku/administrator/**" access="hasRole('ADMIN')" />
 	
 		<security:intercept-url pattern="/**" access="hasRole('NONE')" />
 
